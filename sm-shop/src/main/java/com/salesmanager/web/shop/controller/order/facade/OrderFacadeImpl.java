@@ -288,8 +288,8 @@ public class OrderFacadeImpl implements OrderFacade {
 			modelOrder.setDatePurchased(new Date());
 			modelOrder.setBilling(customer.getBilling());
 			modelOrder.setDelivery(customer.getDelivery());
-			modelOrder.setPaymentModuleCode(order.getPaymentModule());
-			modelOrder.setPaymentType(PaymentType.valueOf(order.getPaymentMethodType()));
+			//modelOrder.setPaymentModuleCode(order.getPaymentModule());
+			//modelOrder.setPaymentType(PaymentType.valueOf(order.getPaymentMethodType()));
 			modelOrder.setShippingModuleCode(order.getShippingModule());
 			modelOrder.setCustomerAgreement(order.isCustomerAgreed());
 			modelOrder.setLocale(LocaleUtils.getLocale(store));//set the store locale based on the country for order $ formatting
@@ -349,7 +349,7 @@ public class OrderFacadeImpl implements OrderFacade {
 				modelOrder.setShippingModuleCode(order.getShippingModule());
 			}
 			
-			String paymentType = order.getPaymentMethodType();
+			/*String paymentType = order.getPaymentMethodType();
 			Payment payment = new Payment();
 			payment.setPaymentType(PaymentType.valueOf(paymentType));
 			if(PaymentType.CREDITCARD.name().equals(paymentType)) {
@@ -397,13 +397,7 @@ public class OrderFacadeImpl implements OrderFacade {
 				cc.setCcNumber(maskedNumber);
 				modelOrder.setCreditCard(cc);
 				
-				/**
-				 * Some payment method works wit a token for PCI reasons,
-				 * we have to remove the credit card number from the system
-				 */
-				//if(order.getPayment().get("null_creditcard")!=null) {
-				//	((CreditCardPayment)payment).setCreditCardNumber(null);
-				//}
+
 
 			}
 			
@@ -432,7 +426,7 @@ public class OrderFacadeImpl implements OrderFacade {
 				orderService.processOrder(modelOrder, customer, order.getShoppingCartItems(), summary, payment, transaction, store);
 			}
 			
-
+			*/
 			
 			return modelOrder;
 		
@@ -726,18 +720,20 @@ public class OrderFacadeImpl implements OrderFacade {
 			if(!shoppingCartService.isFreeShoppingCart(order.getShoppingCartItems()) && paymentType==null) {
 				
 			}
-			
+
+			//TODO agregar validacion de pago mercadopago correcta.
 			//validate payment
-			if(paymentType==null) {
+			/*if(paymentType==null) {
 				ServiceException serviceException = new ServiceException(ServiceException.EXCEPTION_VALIDATION,"payment.required");
 				throw serviceException;
-			}
-			
+			}*/
+
+			//TODO agregar validacion de shipping
 			//validate shipping
-			if(shippingService.requiresShipping(order.getShoppingCartItems(), store) && order.getSelectedShippingOption()==null) {
+			/*if(shippingService.requiresShipping(order.getShoppingCartItems(), store) && order.getSelectedShippingOption()==null) {
 				ServiceException serviceException = new ServiceException(ServiceException.EXCEPTION_VALIDATION,"shipping.required");
 				throw serviceException;
-			}
+			}*/
 			
 			//pre-validate credit card
 			if(PaymentType.CREDITCARD.name().equals(paymentType)) {

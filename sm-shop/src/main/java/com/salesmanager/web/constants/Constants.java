@@ -8,7 +8,7 @@ public class Constants {
 
     public final static String RESPONSE_STATUS = "STATUS";
     public final static String RESPONSE_SUCCESS = "SUCCESS";
-    public final static String DEFAULT_LANGUAGE = "en";
+    public final static String DEFAULT_LANGUAGE = "es";
 	public final static String LANGUAGE = "LANGUAGE";
 	public final static String LANG = "lang";
 	public final static String BREADCRUMB = "BREADCRUMB";
@@ -63,8 +63,8 @@ public class Constants {
 	public final static String URL_EXTENSION= ".html";
 	public final static String REDIRECT_PREFIX ="redirect:";
 
-
-
+	public final static String MP_CLIENT_ID = "8989156561599790";
+	public final static String MP_CLIENT_SECRET = "9auzj1s52Lu8NyNrhlq0DJSDCyItanpA";
 
 	public final static String STORE_CONFIGURATION = "STORECONFIGURATION";
 

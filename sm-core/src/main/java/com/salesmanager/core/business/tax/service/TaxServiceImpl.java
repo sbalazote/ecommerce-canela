@@ -123,21 +123,21 @@ public class TaxServiceImpl
 		String stateProvince = customer.getBilling().getState();
 		
 		TaxBasisCalculation taxBasisCalculation = taxConfiguration.getTaxBasisCalculation();
-		if(taxBasisCalculation.name().equals(TaxBasisCalculation.SHIPPINGADDRESS)){
+		if(taxBasisCalculation/*.name()*/.equals(TaxBasisCalculation.SHIPPINGADDRESS)){
 			Delivery shipping = customer.getDelivery();
 			if(shipping!=null) {
 				country = shipping.getCountry();
 				zone = shipping.getZone();
 				stateProvince = shipping.getState();
 			}
-		} else if(taxBasisCalculation.name().equals(TaxBasisCalculation.BILLINGADDRESS)){
+		} else if(taxBasisCalculation/*.name()*/.equals(TaxBasisCalculation.BILLINGADDRESS)){
 			Billing billing = customer.getBilling();
 			if(billing!=null) {
 				country = billing.getCountry();
 				zone = billing.getZone();
 				stateProvince = billing.getState();
 			}
-		} else if(taxBasisCalculation.name().equals(TaxBasisCalculation.STOREADDRESS)){
+		} else if(taxBasisCalculation/*.name()*/.equals(TaxBasisCalculation.STOREADDRESS)){
 			country = store.getCountry();
 			zone = store.getZone();
 			stateProvince = store.getStorestateprovince();

@@ -347,6 +347,12 @@
 			<version>0.0.7</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.mercadopago</groupId>
+			<artifactId>sdk</artifactId>
+			<version>0.3.4</version>
+		</dependency>
+
 	</dependencies>
 	<repositories>
 		<!-- For testing against latest Spring snapshots -->
@@ -377,6 +383,10 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<repository>
+			<id>mercadopago</id>
+			<url>https://github.com/mercadopago/sdk-java/raw/master/releases</url>
 		</repository>
 
 	</repositories>
@@ -452,6 +462,19 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>tomcat-maven-plugin</artifactId>
 				<version>1.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<server>tomcat</server>
+					<path>/${project.artifactId}</path>
+					<port>8081</port>
+					<!-- <httpsPort>8443</httpsPort>
+                    <keystoreFile>${user.home}/.keystore</keystoreFile>
+                    <keystorePass>password</keystorePass> -->
+				</configuration>
 			</plugin>
 			<!-- minify -->
 			<!-- match with JDK (use 1.7.2 with JDK 1.7) -->

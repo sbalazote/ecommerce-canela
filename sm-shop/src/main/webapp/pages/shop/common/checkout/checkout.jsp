@@ -457,8 +457,9 @@ function bindActions() {
 		
 		
 		$('#pageContainer').showLoading();
+		$('#checkoutForm').submit();
 		//var paymentSelection = $('input[name=paymentMethodType]:checked', checkoutFormId).val();
-		var paymentSelection = $('#paymentModule').val();
+		/*var paymentSelection = $('#paymentModule').val();
 		console.log('Selection ' + paymentSelection);
 		if(paymentSelection.indexOf('paypal') >= 0) {
 			
@@ -480,7 +481,7 @@ function bindActions() {
 			$('#pageContainer').hideLoading();
 			$('#checkoutForm').submit();
 			
-		}
+		}*/
     });
 }
 
@@ -1447,7 +1448,7 @@ $(document).ready(function() {
 										<!-- Submit -->
 										<div class="form-actions">
 											<div class="pull-right"> 
-												<button id="submitOrder" type="button" class="btn btn-large btn-success 
+												<button id="submitOrder" type="button" class="btn btn-large btn-success
 												<c:if test="${errorMessages!=null}"> btn-disabled</c:if>" 
 												<c:if test="${errorMessages!=null}"> disabled="true"</c:if>
 												><s:message code="button.label.submitorder" text="Submit order"/></button>

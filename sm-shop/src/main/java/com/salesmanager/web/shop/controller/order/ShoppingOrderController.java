@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.mercadopago.MP;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.Validate;
 import org.apache.commons.lang3.StringUtils;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -875,9 +877,105 @@ public class ShoppingOrderController extends AbstractController {
 				
 			}
 
+			/*
+
 	        //redirect to completd
 	        return "redirect:/shop/order/confirmation.html";
-	  
+	  		*/
+		String jsonItems = "";
+		for (ShoppingCartItem cartItem : order.getShoppingCartItems()) {
+			Product cartItemProduct = cartItem.getProduct();
+			jsonItems += "{" +
+					"'id': 'sku-" + cartItemProduct.getSku() + "'," +
+					"'title': '" + cartItemProduct.getProductDescription().getMetatagTitle() + "'," +
+					"'currency_id': 'ARS'," +
+					"'picture_url': '" + cartItemProduct.getProductImage().getProductImage() + "'," +
+					"'description': '" + cartItemProduct.getProductDescription().getName() + "'," +
+					"'category_id': 'home'," +
+					"'quantity': " + cartItem.getQuantity() + "," +
+					"'unit_price': " + cartItem.getFinalPrice().getFinalPrice().toString() +
+					"}";
+
+			if (order.getShoppingCartItems().size() > 1) {
+				jsonItems += ",";
+			}
+		}
+
+
+		MP mp = new MP(Constants.MP_CLIENT_ID, Constants.MP_CLIENT_SECRET);
+		mp.sandboxMode(true);
+		String preferenceData = "{" +
+				"'items': [" + jsonItems + "]," +
+				"'payer': {" +
+				"'name': '" + order.getCustomer().getBilling().getFirstName() + "'," +
+				"'surname': '" + order.getCustomer().getBilling().getLastName() + "'," +
+				"'email': '" + order.getCustomer().getEmailAddress() + "'," +
+/*
+				"'date_created': '2015-06-02T12:58:41.425-04:00'," +
+*/
+				"'phone': {" +
+				"'area_code': '54'," +
+				"'number': '" + order.getCustomer().getBilling().getPhone() + "'" +
+				"}," +
+				/*"'identification': {" +
+				"'type': 'IDENTIFICATION_TYPE_ID', // Available ID types at https://api.mercadopago.com/v1/identification_types" +
+				"'number': '12345678\"" +
+				"}," +*/
+				"'address': {" +
+				"'street_name': '" + order.getCustomer().getBilling().getAddress() + "'," +
+				/*"'street_number': 123," +*/
+				"'zip_code': '" + order.getCustomer().getBilling().getPostalCode() + "'" +
+				"} " +
+				"}," +
+				"'back_urls': {" +
+				"'success': 'http://localhost:8080/sm-shop/shop/order/confirmation.html'," +
+				"'failure': 'http://localhost:8080/sm-shop/shop/order/confirmation.html'," +
+				"'pending': 'http://localhost:8080/sm-shop/shop/order/confirmation.html'" +
+				"}," +
+				"'auto_return': 'approved'," +
+				"'payment_methods': {" +
+				/*"'excluded_payment_methods': [" +
+				"{" +
+				"'id': 'master\"" +
+				"}" +
+				"]," +*/
+				"'excluded_payment_types': [" +
+				"{" +
+				"'id': 'ticket'" +
+				"}," +
+				"{" +
+				"'id': 'atm'" +
+				"}," +
+				"{" +
+				"'id': 'debit_card'" +
+				"}," +
+				"{" +
+				"'id': 'prepaid_card'" +
+				"}" +
+				"]," +
+				"'installments': 12" +
+				/*"'default_payment_method_id': null," +
+				"'default_installments': null" +*/
+				"}" +
+				/*"'shipments': {" +
+				"'receiver_address': {" +
+				"'zip_code': 'ZIP_CODE'," +
+				"'street_number': 123," +
+				"'street_name': 'Street'," +
+				"'floor': 4," +
+				"'apartment': 'C\"" +
+				"}" +
+				"}," +
+				"'notification_url': 'https://www.your-site.com/ipn'," +
+				"'external_reference': 'Reference_1234'," +
+				"'expires': true," +
+				"'expiration_date_from': '2016-02-01T12:00:00.000-04:00'," +
+				"'expiration_date_to': '2016-02-28T12:00:00.000-04:00\"" +*/
+				"}";
+		JSONObject preference = mp.createPreference(preferenceData);
+		String initPoint = preference.getJSONObject("response").getString("sandbox_init_point");
+
+		return "redirect:" + initPoint;
 			
 
 

@@ -48,7 +48,7 @@ function getLoginErrorLabel() {
 }
 
 function getEmptyCartLabel() {
-	return '<s:message code="cart.empty" text="Your Shopping cart is empty" />';
+	return '<s:message code="label.emptycart" text="Your Shopping cart is empty" />';
 }
 
 
