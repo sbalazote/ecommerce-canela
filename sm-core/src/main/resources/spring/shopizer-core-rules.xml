@@ -10,7 +10,7 @@
 
 	<!-- Decision table for the the selection of a shipping method -->
 	<!-- from shopizer-shipping-decision-table-module -->
-    <drools:kbase id="shippingMethodDecisionBase">
+    <!--<drools:kbase id="shippingMethodDecisionBase">
         <drools:resources>
             <drools:resource type="DTABLE" source="classpath:rules/shipping-decision-rules.xls"/>
         </drools:resources>
@@ -20,15 +20,15 @@
  
 
 	
-	  	<!-- concrete module for the above kbase -->
+	  	&lt;!&ndash; concrete module for the above kbase &ndash;&gt;
   	<beans:bean id="shippingMethodDecisionProcess" class="com.salesmanager.core.modules.integration.shipping.impl.ShippingDecisionPreProcessorImpl">
 		<beans:property name="shippingMethodDecision" ref="shippingMethodDecision" />
 		<beans:property name="kbase" ref="shippingMethodDecisionBase" />
-	</beans:bean>
+	</beans:bean>-->
 	
 	<!-- Custom shipping price based on drool rules -->
 	<!-- Basic custom shipping rules -->
-	<drools:kbase id="shippingPriceDecisionBase">
+	<!--<drools:kbase id="shippingPriceDecisionBase">
         <drools:resources>
             <drools:resource type="DTABLE" source="classpath:rules/shipping-custom-rules.xls"/>
         </drools:resources>
@@ -36,10 +36,10 @@
     
     <drools:ksession id="shippingPriceRule" name="shippingPriceRule" type="stateless" kbase="shippingPriceDecisionBase"/>
     
-    <!-- concrete module for the above kbase -->
+    &lt;!&ndash; concrete module for the above kbase &ndash;&gt;
     <beans:bean id="customShippingPriceModule" class="com.salesmanager.core.modules.integration.shipping.impl.CustomShippingQuoteRules">
 		<beans:property name="shippingPriceRule" ref="shippingPriceRule" />
 		<beans:property name="kbase" ref="shippingPriceDecisionBase" />
-	</beans:bean>
+	</beans:bean>-->
 
 </beans:beans>
